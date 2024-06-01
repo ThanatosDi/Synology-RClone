@@ -1,0 +1,32 @@
+services:
+  template:
+    image: rclone/rclone:${RCLONE_VERSION:-latest}
+    environment:
+      - PHP_TZ=${TZ:-Etc/GMT}
+      - TZ=${TZ:-Etc/UTC}
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - RCLONE_CONFIG_DIR=/rclone/config
+      - RCLONE_CONFIG=/rclone/config/rclone.conf
+      - RCLONE_LOG_FILE=/rclone/logs/template.log
+      - RCLONE_TEMP_DIR=/rclone/tmp
+      - RCLONE_PROGRESS=true
+      - RCLONE_NO_TRAVERSE=true
+      - RCLONE_DELETE_EXCLUDED=true
+      - RCLONE_EXCLUDE_FROM=/rclone/.rcloneignore
+      - RCLONE_TRANSFERS=8
+      - RCLONE_CHECKERS=8
+      - RCLONE_MULTI_THREAD_STREAMS=8
+      - RCLONE_VERBOSE=0
+      - RCLONE_MAX_AGE=24h
+    working_dir: /rclone
+    volumes:
+      - ./config/nas.conf:/rclone/config/rclone.conf:ro
+      - ./.rcloneignore:/rclone/.rcloneignore
+      - ./logs:/rclone/logs:rw
+      - ./tmp:/rclone/tmp:rw
+    command: copy 
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
