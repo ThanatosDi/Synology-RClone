@@ -1,3 +1,8 @@
+# Hey! This repo is no longer supported
+Synology-RClone has been deprecated in favor of: https://github.com/ThanatosDi/rclone-serve
+
+
+
 # Synology-RClone
 Backup Synology NAS files with RClone
 
